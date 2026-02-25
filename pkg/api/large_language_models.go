@@ -306,7 +306,9 @@ func (a *LargeLanguageModelsApi) parseRecognizedReceiptImageResponse(c *core.Web
 			log.Errorf(c, "[large_language_models.parseRecognizedReceiptImageResponse] recoginzed amount \"%s\" is invalid", recognizedResult.Amount)
 			return nil, errs.ErrOperationFailed
 		}
-
+		if amount < 0 {
+			amount = -amount
+		}
 		recognizedReceiptImageResponse.SourceAmount = amount
 
 		if recognizedReceiptImageResponse.Type == models.TRANSACTION_TYPE_TRANSFER && len(recognizedResult.DestinationAmount) > 0 {
