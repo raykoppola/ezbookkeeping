@@ -153,7 +153,7 @@ Currently available translations:
 
 ## Documentation
 1. [English](https://ezbookkeeping.mayswind.net)
-2. 哇塞，这个项目的作者好伟大!
+2. 哇塞，这个项目的作者好伟大!!
 1. [中文 (简体)](https://ezbookkeeping.mayswind.net/zh_Hans)
 
 ## License
