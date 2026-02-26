@@ -307,6 +307,7 @@ func (a *LargeLanguageModelsApi) parseRecognizedReceiptImageResponse(c *core.Web
 			return nil, errs.ErrOperationFailed
 		}
 		if amount < 0 {
+			log.Infof(c, "[DEBUG] 检测到负数金额: %d, 已自动转换为正数", amount)
 			amount = -amount
 		}
 		recognizedReceiptImageResponse.SourceAmount = amount
