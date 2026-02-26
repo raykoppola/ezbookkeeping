@@ -306,6 +306,7 @@ func (a *LargeLanguageModelsApi) parseRecognizedReceiptImageResponse(c *core.Web
 			log.Errorf(c, "[large_language_models.parseRecognizedReceiptImageResponse] recoginzed amount \"%s\" is invalid", recognizedResult.Amount)
 			return nil, errs.ErrOperationFailed
 		}
+		// ✅ 修复：拦截负数，并打印日志到群晖
 		if amount < 0 {
 			log.Infof(c, "[DEBUG] 检测到负数金额: %d, 已自动转换为正数", amount)
 			amount = -amount
@@ -319,7 +320,11 @@ func (a *LargeLanguageModelsApi) parseRecognizedReceiptImageResponse(c *core.Web
 				log.Errorf(c, "[large_language_models.parseRecognizedReceiptImageResponse] recoginzed destination amount \"%s\" is invalid", recognizedResult.DestinationAmount)
 				return nil, errs.ErrOperationFailed
 			}
-
+            // ✅ 修复：同时也拦截目标金额的负数
+			if destinationAmount < 0 {
+				log.Infof(c, "[DEBUG] 检测到负数目标金额: %d, 已自动转换为正数", destinationAmount)
+				destinationAmount = -destinationAmount
+			}
 			recognizedReceiptImageResponse.DestinationAmount = destinationAmount
 		}
 	}
