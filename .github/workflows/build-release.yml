@@ -3,8 +3,10 @@ name: Build Release
 on:
   push:
     tags:
-      - "v*.*.*"
-
+      - "v*"
+permissions:
+  contents: write
+  packages: write
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -79,8 +81,8 @@ jobs:
           platform-name: linux-amd64
           docker-push: true
           docker-image-name: ${{ vars.DOCKER_IMAGE_NAME }}
-          docker-username: ${{ vars.DOCKER_USERNAME }}
-          docker-password: ${{ secrets.DOCKER_PASSWORD }}
+          docker-username: ${{ github.actor }}
+          docker-password: ${{ secrets.GITHUB_TOKEN }}
           docker-bake-meta-file-path: ${{ needs.setup.outputs.ezbookkeeping-docker-bake-meta-file-path }}
           docker-bake-meta-artifact-name: ${{ needs.setup.outputs.ezbookkeeping-docker-bake-meta-artifact-name }}
           docker-bake-digests-file-path: ${{ needs.setup.outputs.ezbookkeeping-docker-digests-file-path }}
@@ -116,8 +118,8 @@ jobs:
           platform-name: ${{ matrix.platform-name }}
           docker-push: true
           docker-image-name: ${{ vars.DOCKER_IMAGE_NAME }}
-          docker-username: ${{ vars.DOCKER_USERNAME }}
-          docker-password: ${{ secrets.DOCKER_PASSWORD }}
+          docker-username: ${{ github.actor }}
+          docker-password: ${{ secrets.GITHUB_TOKEN }}
           docker-bake-meta-file-path: ${{ needs.setup.outputs.ezbookkeeping-docker-bake-meta-file-path }}
           docker-bake-meta-artifact-name: ${{ needs.setup.outputs.ezbookkeeping-docker-bake-meta-artifact-name }}
           docker-bake-digests-file-path: ${{ needs.setup.outputs.ezbookkeeping-docker-digests-file-path }}
@@ -138,8 +140,8 @@ jobs:
       - uses: ./.github/actions/push-linux-docker
         with:
           docker-image-name: ${{ vars.DOCKER_IMAGE_NAME }}
-          docker-username: ${{ vars.DOCKER_USERNAME }}
-          docker-password: ${{ secrets.DOCKER_PASSWORD }}
+          docker-username: ${{ github.actor }}
+          docker-password: ${{ secrets.GITHUB_TOKEN }}
           docker-bake-meta-file-path: ${{ needs.setup.outputs.ezbookkeeping-docker-bake-meta-file-path }}
           docker-bake-meta-artifact-name: ${{ needs.setup.outputs.ezbookkeeping-docker-bake-meta-artifact-name }}
           docker-bake-digests-file-path: ${{ needs.setup.outputs.ezbookkeeping-docker-digests-file-path }}
